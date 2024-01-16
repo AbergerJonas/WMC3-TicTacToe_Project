@@ -1,6 +1,18 @@
+import { useState } from "react";
+
 const Player = (props) => {
 
-    const {playerName,playerSymbol} = props;
+    let {playerName,playerSymbol} = props; //Assign Properties
+    const [isEditing, setIsEditing] = useState(false);
+
+
+
+    const handleEditClick = () => {
+        setIsEditing(true);
+    }
+    if(isEditing) {
+        playerName = <input type="text" required/> //required => erforderliche Eingabe
+    }
 
     return (
         <li>
@@ -8,7 +20,7 @@ const Player = (props) => {
               <span className="player-name">{playerName}</span>
               <span className="player-symbol">{playerSymbol}</span>
             </span>
-            <button>Edit</button>
+            <button onClick={handleEditClick}>Edit</button>
         </li>
     )
 }
