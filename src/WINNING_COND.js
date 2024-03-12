@@ -1,4 +1,4 @@
-export const WINNING_COND = [
+const WINNING_COND = [
     [
       { row: 0, column: 0 },
       { row: 0, column: 1 },
@@ -40,3 +40,5 @@ export const WINNING_COND = [
       { row: 2, column: 0 },
     ],
   ];
+
+  export default WINNING_COND;

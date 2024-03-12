@@ -3,6 +3,14 @@ import { useState } from 'react';
 import Player from './components/Player';
 import GameBoard from './components/GameBoard';
 import Log from './components/Log';
+import WINNING_COND from './WINNING_COND'
+
+const initialGameBoard = [
+  [null,null,null],
+  [null,null,null],
+  [null,null,null]
+];
+
 
 
 const deriveActivePlayer = (gameTurns) => {
@@ -13,27 +21,25 @@ const deriveActivePlayer = (gameTurns) => {
       return currentPlayer
 }
 
-
-
-
 function App() {
   const [gameTurns, setGameTurns] = useState([]);
-  // const [activePlayer, setActivePlayer] = useState('X');
   const activePlayer = deriveActivePlayer(gameTurns);
+
+  let gameBoard = initialGameBoard
+    
+    for(const turn of gameTurns) {
+        const {square,player} = turn
+        const {row, col} = square
+        
+        gameBoard[row][col] = player
+    }
+
 
 
   const handleSelectSquare = (rowIndex, colIndex) => {
-      
-    // setActivePlayer((currentActivePlayer) => {return currentActivePlayer === 'X' ? 'O' : 'X'})
     setGameTurns((prevTurns) => {
-      const currentPlayer = deriveActivePlayer(prevTurns)
-
-
-      // let currentPlayer = 'X'
-      // if(prevTurns.length > 0 && prevTurns[0].player === 'X') {
-      //     currentPlayer = 'O'
-      // }
-
+    const currentPlayer = deriveActivePlayer(prevTurns)
+    
 
     const updatedTurns = [
       {square: {row: rowIndex, col: colIndex}, player: currentPlayer},
@@ -52,7 +58,7 @@ function App() {
           <Player initName="Player 2" initSymbol="O" isActive ={activePlayer === 'O'}></Player>
         </ol>
         <ol>
-            <GameBoard onSelectSquare={handleSelectSquare} turns={gameTurns}></GameBoard>
+            <GameBoard onSelectSquare={handleSelectSquare} board={gameBoard} ></GameBoard>
         </ol>
       </div>
       <div>
